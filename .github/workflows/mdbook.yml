@@ -30,6 +30,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MDBOOK_VERSION: 0.4.36
+    defaults:
+      run:
+        working-directory: ./blog
     steps:
       - uses: actions/checkout@v4
       - name: Install mdBook
@@ -42,10 +45,13 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Build with mdBook
         run: mdbook build
+      - name: Verify Folders
+        run: |
+          ls -a
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./book
+          path: ./blog/book
 
   # Deployment job
   deploy:
